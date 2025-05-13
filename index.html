@@ -3,104 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Arscenic Games Collection v1.4</title>
+    <title>Real Games Collection</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+            background-color: #f4f4f4;
             margin: 0;
             padding: 0;
         }
         header {
             background-color: #333;
             color: white;
-            padding: 10px 20px;
             text-align: center;
+            padding: 1em;
         }
-        main {
+        h1 {
+            margin: 0;
+        }
+        .game-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-around;
-            padding: 20px;
+            margin: 20px;
         }
-        .game {
+        .game-card {
             background-color: white;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            border-radius: 8px;
-            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin: 10px;
-            width: 300px;
+            width: 250px;
+            overflow: hidden;
+            text-align: center;
+            transition: transform 0.3s ease;
         }
-        .game iframe {
+        .game-card:hover {
+            transform: scale(1.05);
+        }
+        .game-card img {
             width: 100%;
-            height: 200px;
+            height: 150px;
+            object-fit: cover;
         }
-        .game-title {
-            background-color: #333;
-            color: white;
-            padding: 10px;
-            text-align: center;
+        .game-card h3 {
+            font-size: 1.2em;
+            margin: 10px 0;
         }
-        .game-description {
-            padding: 10px;
-            text-align: center;
+        .game-card p {
+            font-size: 1em;
             color: #555;
+            padding: 0 10px;
         }
-        footer {
-            text-align: center;
-            background-color: #333;
+        .game-card a {
+            display: inline-block;
+            background-color: #007BFF;
             color: white;
-            padding: 10px;
-            margin-top: 20px;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .game-card a:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
+    <header>
+        <h1>Real Games Collection</h1>
+        <p>Discover some of the best games to play today!</p>
+    </header>
 
-<header>
-    <h1>Welcome to Arscenic Games Collection v1.4</h1>
-    <p>Your one-stop destination for browser-based games</p>
-</header>
-
-<main>
-    <!-- Game 1: Flappy Bird -->
-    <div class="game">
-        <div class="game-title">
-            <h2>Game 1: Flappy Bird</h2>
+    <div class="game-container">
+        <!-- Game 1 -->
+        <div class="game-card">
+            <img src="https://example.com/images/fifa23.jpg" alt="FIFA 23">
+            <h3>FIFA 23</h3>
+            <p>The latest entry in the popular FIFA series, bringing realistic football action and new features.</p>
+            <a href="https://www.ea.com/games/fifa/fifa-23" target="_blank">Play Now</a>
         </div>
-        <iframe src="https://itch.io/embed/123456" title="Flappy Bird Game"></iframe>
-        <div class="game-description">
-            <p>Flap through obstacles and aim for the highest score.</p>
+
+        <!-- Game 2 -->
+        <div class="game-card">
+            <img src="https://example.com/images/eldenring.jpg" alt="Elden Ring">
+            <h3>Elden Ring</h3>
+            <p>A fantasy action-RPG by FromSoftware set in a vast open world, with an intriguing story and challenging gameplay.</p>
+            <a href="https://en.bandainamcoent.eu/elden-ring" target="_blank">Play Now</a>
+        </div>
+
+        <!-- Game 3 -->
+        <div class="game-card">
+            <img src="https://example.com/images/fortnite.jpg" alt="Fortnite">
+            <h3>Fortnite</h3>
+            <p>A free-to-play battle royale game with vibrant graphics and fast-paced gameplay.</p>
+            <a href="https://www.epicgames.com/fortnite" target="_blank">Play Now</a>
+        </div>
+
+        <!-- Game 4 -->
+        <div class="game-card">
+            <img src="https://example.com/images/codmw2.jpg" alt="Call of Duty: Modern Warfare 2">
+            <h3>Call of Duty: Modern Warfare 2</h3>
+            <p>A first-person shooter that continues the legendary Modern Warfare series with high-stakes action.</p>
+            <a href="https://www.callofduty.com/modernwarfare2" target="_blank">Play Now</a>
+        </div>
+
+        <!-- Game 5 -->
+        <div class="game-card">
+            <img src="https://example.com/images/amongus.jpg" alt="Among Us">
+            <h3>Among Us</h3>
+            <p>A multiplayer game where players work together to complete tasks, but one player is secretly sabotaging them.</p>
+            <a href="https://www.innersloth.com/gameAmongUs.php" target="_blank">Play Now</a>
         </div>
     </div>
-
-    <!-- Game 2: Space Shooter -->
-    <div class="game">
-        <div class="game-title">
-            <h2>Game 2: Space Shooter</h2>
-        </div>
-        <iframe src="https://www.crazygames.com/embed/space-shooter" title="Space Shooter Game"></iframe>
-        <div class="game-description">
-            <p>Battle enemies in outer space in this thrilling shooter game.</p>
-        </div>
-    </div>
-
-    <!-- Game 3: Puzzle Challenge -->
-    <div class="game">
-        <div class="game-title">
-            <h2>Game 3: Puzzle Challenge</h2>
-        </div>
-        <iframe src="https://www.gamepix.com/games/puzzle-challenge" title="Puzzle Challenge Game"></iframe>
-        <div class="game-description">
-            <p>Test your skills with a variety of tricky puzzles.</p>
-        </div>
-    </div>
-</main>
-
-<footer>
-    <p>&copy; 2025 Arscenic Games. All Rights Reserved.</p>
-</footer>
-
 </body>
 </html>
