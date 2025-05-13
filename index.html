@@ -8,12 +8,14 @@
     body {
       margin: 0;
       background: #111;
-      overflow: hidden;
+      overflow-x: hidden;
+      color: white;
+      font-family: Arial, sans-serif;
     }
     .iframe-container {
       position: relative;
       width: 100%;
-      height: 100vh; /* Full height for the OvO game */
+      height: 80vh; /* Reduced height to allow scrolling */
       background-color: #fff;
       border: none;
     }
@@ -26,7 +28,11 @@
       text-align: center;
       padding: 20px;
       background-color: #222;
-      color: white;
+    }
+    .extra-content {
+      padding: 20px;
+      background-color: #333;
+      text-align: center;
     }
   </style>
 </head>
@@ -34,12 +40,19 @@
 
   <!-- OvO Game iframe from MathPlayZone -->
   <div class="iframe-container">
-    <iframe src="https://mathplayzone.com/ovo/?_gl=1*jigk7u*_up*MQ..*_ga*NTc4MjYzNzkxLjE3NDcwOTkxNTQ.*_ga_JEHVK5J0WH*czE3NDcwOTkxNTQkbzEkZzAkdDE3NDcwOTkxNTQkajAkbDAkaDA" title="OvO Game" scrolling="no" allow="autoplay; payment; fullscreen; microphone; clipboard-read; focus-without-user-activation *; screen-wake-lock; gamepad; clipboard-write 'self' https://mathplayzone.com" webkitallowfullscreen="true" mozallowfullscreen="true" msallowfullscreen="true" allowfullscreen="true" loading="eager"></iframe>
+    <iframe src="https://mathplayzone.com/ovo/?_gl=1*jigk7u*_up*MQ..*_ga*NTc4MjYzNzkxLjE3NDcwOTkxNTQ.*_ga_JEHVK5J0WH*czE3NDcwOTkxNTQkbzEkZzAkdDE3NDcwOTkxNTQkajAkbDAkaDA" title="OvO Game" scrolling="yes" allow="autoplay; payment; fullscreen; microphone; clipboard-read; focus-without-user-activation *; screen-wake-lock; gamepad; clipboard-write 'self' https://mathplayzone.com" webkitallowfullscreen="true" mozallowfullscreen="true" msallowfullscreen="true" allowfullscreen="true" loading="eager"></iframe>
   </div>
 
-  <!-- Credits and Links -->
-  <div class="game-links">
+  <!-- Additional content below the game iframe -->
+  <div class="extra-content">
+    <p>Scroll down for more content or links!</p>
     <p><a href="https://mathplayzone.com/ovo/" target="_blank" style="color: #fff;">OvO Game</a> by MathPlayZone</p>
+    <p>Enjoy the game and explore more levels!</p>
+  </div>
+
+  <!-- More content (optional) -->
+  <div class="extra-content">
+    <p>This is some extra content. You can add any other information, links, or interactive elements here!</p>
   </div>
 
 </body>
