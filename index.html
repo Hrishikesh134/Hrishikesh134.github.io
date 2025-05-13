@@ -3,122 +3,155 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>OvO Game</title>
+  <title>OvO-Inspired Game</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
       margin: 0;
-      padding: 0;
+      background: #111;
+      overflow: hidden;
     }
-    header {
-      background-color: #333;
-      color: white;
-      text-align: center;
-      padding: 1em;
-    }
-    h1 {
-      margin: 0;
-    }
-    .game-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin: 20px;
-    }
-    .game-card {
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      margin: 10px;
-      width: 300px;
-      text-align: center;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
-    .game-card:hover {
-      transform: scale(1.05);
-    }
-    .game-card h3 {
-      font-size: 1.5em;
-      margin: 10px 0;
-    }
-    .game-card p {
-      font-size: 1.2em;
-      color: #555;
-    }
-    iframe {
-      width: 100%;
-      height: 600px;
-      border: none;
-      margin-top: 20px;
-    }
-    .fullscreen-btn {
-      margin-top: 10px;
-      padding: 10px 20px;
-      background-color: #007BFF;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 1em;
-    }
-    .fullscreen-btn:hover {
-      background-color: #0056b3;
+    canvas {
+      display: block;
+      background: #eee;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>OvO Game</h1>
-    <p>Click below to start the game. You can go full screen for a better experience!</p>
-  </header>
-
-  <div class="game-container">
-    <div class="game-card" onclick="playOvO()">
-      <h3>Play OvO</h3>
-      <p>Click to start playing!</p>
-    </div>
-
-    <!-- Real OvO game -->
-    <iframe
-      id="game-frame"
-      src="https://ovo.surge.sh"
-      style="display: none;"
-      allowfullscreen
-    ></iframe>
-
-    <button
-      id="fullscreen-btn"
-      class="fullscreen-btn"
-      onclick="toggleFullscreen()"
-      style="display: none;"
-    >
-      Go Fullscreen
-    </button>
-  </div>
-
+  <canvas id="game" width="800" height="600"></canvas>
   <script>
-    function playOvO() {
-      const iframe = document.getElementById("game-frame");
-      const button = document.getElementById("fullscreen-btn");
-      iframe.style.display = "block";
-      button.style.display = "inline-block";
-    }
+    const canvas = document.getElementById("game");
+    const ctx = canvas.getContext("2d");
 
-    function toggleFullscreen() {
-      const iframe = document.getElementById("game-frame");
-      if (iframe.requestFullscreen) {
-        iframe.requestFullscreen();
-      } else if (iframe.mozRequestFullScreen) {
-        iframe.mozRequestFullScreen();
-      } else if (iframe.webkitRequestFullscreen) {
-        iframe.webkitRequestFullscreen();
-      } else if (iframe.msRequestFullscreen) {
-        iframe.msRequestFullscreen();
+    const keys = {};
+    window.addEventListener("keydown", (e) => keys[e.code] = true);
+    window.addEventListener("keyup", (e) => keys[e.code] = false);
+
+    const player = {
+      x: 100,
+      y: 100,
+      w: 30,
+      h: 30,
+      dx: 0,
+      dy: 0,
+      speed: 3,
+      jumpPower: 10,
+      grounded: false,
+      onWall: false,
+      wallDir: 0,
+      dashing: false,
+      dashTime: 0
+    };
+
+    const gravity = 0.5;
+    const friction = 0.8;
+    const walls = [
+      { x: 0, y: 580, w: 800, h: 20 }, // ground
+      { x: 300, y: 500, w: 200, h: 20 },
+      { x: 500, y: 400, w: 20, h: 200 },
+      { x: 200, y: 300, w: 200, h: 20 },
+      { x: 100, y: 200, w: 20, h: 200 },
+      { x: 0, y: 0, w: 20, h: 600 },   // left wall
+      { x: 780, y: 0, w: 20, h: 600 }  // right wall
+    ];
+
+    function update() {
+      // Movement input
+      if (keys["ArrowLeft"] || keys["KeyA"]) player.dx = -player.speed;
+      else if (keys["ArrowRight"] || keys["KeyD"]) player.dx = player.speed;
+      else player.dx = 0;
+
+      // Jump
+      if ((keys["ArrowUp"] || keys["KeyW"] || keys["Space"]) && player.grounded) {
+        player.dy = -player.jumpPower;
+        player.grounded = false;
+      }
+
+      // Wall-jump
+      if ((keys["ArrowUp"] || keys["KeyW"] || keys["Space"]) && player.onWall && !player.grounded) {
+        player.dy = -player.jumpPower;
+        player.dx = -player.wallDir * player.speed * 1.5;
+        player.onWall = false;
+      }
+
+      // Apply gravity
+      player.dy += gravity;
+
+      // Dash (basic example)
+      if ((keys["ShiftLeft"] || keys["ShiftRight"]) && !player.dashing && player.dashTime <= 0) {
+        player.dashing = true;
+        player.dashTime = 10;
+      }
+
+      if (player.dashing) {
+        player.dx *= 3;
+        player.dashTime--;
+        if (player.dashTime <= 0) {
+          player.dashing = false;
+        }
+      }
+
+      // Update position
+      player.x += player.dx;
+      player.y += player.dy;
+
+      // Collision detection
+      player.grounded = false;
+      player.onWall = false;
+
+      for (let wall of walls) {
+        if (
+          player.x < wall.x + wall.w &&
+          player.x + player.w > wall.x &&
+          player.y < wall.y + wall.h &&
+          player.y + player.h > wall.y
+        ) {
+          const overlapX = (player.x + player.w / 2) - (wall.x + wall.w / 2);
+          const overlapY = (player.y + player.h / 2) - (wall.y + wall.h / 2);
+          const halfW = (player.w + wall.w) / 2;
+          const halfH = (player.h + wall.h) / 2;
+
+          if (Math.abs(overlapX) < halfW && Math.abs(overlapY) < halfH) {
+            const offsetX = halfW - Math.abs(overlapX);
+            const offsetY = halfH - Math.abs(overlapY);
+
+            if (offsetX < offsetY) {
+              if (overlapX > 0) player.x += offsetX;
+              else player.x -= offsetX;
+              player.dx = 0;
+              player.onWall = true;
+              player.wallDir = overlapX > 0 ? 1 : -1;
+            } else {
+              if (overlapY > 0) player.y += offsetY;
+              else player.y -= offsetY;
+              player.dy = 0;
+              if (overlapY < 0) player.grounded = true;
+            }
+          }
+        }
       }
     }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw walls
+      ctx.fillStyle = "#444";
+      for (let wall of walls) {
+        ctx.fillRect(wall.x, wall.y, wall.w, wall.h);
+      }
+
+      // Draw player
+      ctx.fillStyle = "#00aaff";
+      ctx.fillRect(player.x, player.y, player.w, player.h);
+    }
+
+    function loop() {
+      update();
+      draw();
+      requestAnimationFrame(loop);
+    }
+
+    loop();
   </script>
 </body>
 </html>
