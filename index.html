@@ -3,16 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>OvO-Inspired Game</title>
+  <title>Fray Fight Game</title>
   <style>
     body {
       margin: 0;
       background: #111;
       overflow: hidden;
-    }
-    canvas {
-      display: block;
-      background: #eee;
     }
     .iframe-container {
       position: relative;
@@ -29,126 +25,6 @@
   </style>
 </head>
 <body>
-
-  <!-- OvO-inspired Game Canvas -->
-  <canvas id="game" width="800" height="600"></canvas>
-
-  <script>
-    const canvas = document.getElementById('game');
-    const ctx = canvas.getContext('2d');
-    
-    const TILE_SIZE = 40;
-    const levels = [
-      [
-        "................",
-        "................",
-        "................",
-        "....P...........",
-        "######.....E....",
-        "................"
-      ],
-      [
-        "................",
-        "..........^.....",
-        ".......#####....",
-        "....P...........",
-        "######.....E....",
-        "................"
-      ]
-      // Add more levels up to 60
-    ];
-
-    let currentLevel = 0;
-    let player = { x: 0, y: 0, dx: 0, dy: 0, w: 30, h: 30, grounded: false };
-    const gravity = 0.5;
-    let tiles = [];
-
-    function loadLevel(level) {
-      tiles = [];
-      const map = levels[level];
-      for (let row = 0; row < map.length; row++) {
-        for (let col = 0; col < map[row].length; col++) {
-          const ch = map[row][col];
-          const x = col * TILE_SIZE;
-          const y = row * TILE_SIZE;
-          if (ch === '#') tiles.push({ x, y, w: TILE_SIZE, h: TILE_SIZE, type: 'solid' });
-          if (ch === '^') tiles.push({ x, y, w: TILE_SIZE, h: TILE_SIZE, type: 'spike' });
-          if (ch === 'E') tiles.push({ x, y, w: TILE_SIZE, h: TILE_SIZE, type: 'exit' });
-          if (ch === 'P') { player.x = x; player.y = y; player.dx = 0; player.dy = 0; }
-        }
-      }
-    }
-
-    const keys = {};
-    window.addEventListener("keydown", e => keys[e.code] = true);
-    window.addEventListener("keyup", e => keys[e.code] = false);
-
-    function update() {
-      if (keys['ArrowLeft'] || keys['KeyA']) player.dx = -5;
-      else if (keys['ArrowRight'] || keys['KeyD']) player.dx = 5;
-      else player.dx = 0;
-
-      if ((keys['ArrowUp'] || keys['KeyW'] || keys['Space']) && player.grounded) {
-        player.dy = -10;
-        player.grounded = false;
-      }
-
-      player.dy += gravity;
-      player.x += player.dx;
-      player.y += player.dy;
-
-      player.grounded = false;
-      for (let tile of tiles) {
-        if (
-          player.x < tile.x + tile.w &&
-          player.x + player.w > tile.x &&
-          player.y < tile.y + tile.h &&
-          player.y + player.h > tile.y
-        ) {
-          if (tile.type === 'solid') {
-            if (player.dy > 0 && player.y + player.h - player.dy <= tile.y) {
-              player.y = tile.y - player.h;
-              player.dy = 0;
-              player.grounded = true;
-            } else if (player.dy < 0 && player.y >= tile.y + tile.h - 1) {
-              player.y = tile.y + tile.h;
-              player.dy = 0;
-            } else if (player.dx > 0) {
-              player.x = tile.x - player.w;
-            } else if (player.dx < 0) {
-              player.x = tile.x + tile.w;
-            }
-          } else if (tile.type === 'spike') {
-            loadLevel(currentLevel); // restart level
-          } else if (tile.type === 'exit') {
-            currentLevel = (currentLevel + 1) % levels.length;
-            loadLevel(currentLevel);
-          }
-        }
-      }
-    }
-
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (let tile of tiles) {
-        if (tile.type === 'solid') ctx.fillStyle = '#333';
-        if (tile.type === 'spike') ctx.fillStyle = '#f00';
-        if (tile.type === 'exit') ctx.fillStyle = '#0f0';
-        ctx.fillRect(tile.x, tile.y, tile.w, tile.h);
-      }
-      ctx.fillStyle = '#00f';
-      ctx.fillRect(player.x, player.y, player.w, player.h);
-    }
-
-    function gameLoop() {
-      update();
-      draw();
-      requestAnimationFrame(gameLoop);
-    }
-
-    loadLevel(currentLevel);
-    gameLoop();
-  </script>
 
   <!-- Fray Fight Game iframe -->
   <div class="iframe-container">
