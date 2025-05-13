@@ -34,6 +34,7 @@
             width: 250px;
             overflow: hidden;
             text-align: center;
+            cursor: pointer;
             transition: transform 0.3s ease;
         }
         .game-card:hover {
@@ -66,54 +67,83 @@
         .game-card a:hover {
             background-color: #0056b3;
         }
+        .game-container iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
     <header>
         <h1>Real Games Collection</h1>
-        <p>Discover some of the best games to play today!</p>
+        <p>Click on a game to play it directly in the same tab!</p>
     </header>
 
     <div class="game-container">
         <!-- Game 1 -->
-        <div class="game-card">
+        <div class="game-card" onclick="playGame('fifa23')">
             <img src="https://example.com/images/fifa23.jpg" alt="FIFA 23">
             <h3>FIFA 23</h3>
             <p>The latest entry in the popular FIFA series, bringing realistic football action and new features.</p>
-            <a href="https://www.ea.com/games/fifa/fifa-23" target="_blank">Play Now</a>
         </div>
 
         <!-- Game 2 -->
-        <div class="game-card">
+        <div class="game-card" onclick="playGame('eldenring')">
             <img src="https://example.com/images/eldenring.jpg" alt="Elden Ring">
             <h3>Elden Ring</h3>
             <p>A fantasy action-RPG by FromSoftware set in a vast open world, with an intriguing story and challenging gameplay.</p>
-            <a href="https://en.bandainamcoent.eu/elden-ring" target="_blank">Play Now</a>
         </div>
 
         <!-- Game 3 -->
-        <div class="game-card">
+        <div class="game-card" onclick="playGame('fortnite')">
             <img src="https://example.com/images/fortnite.jpg" alt="Fortnite">
             <h3>Fortnite</h3>
             <p>A free-to-play battle royale game with vibrant graphics and fast-paced gameplay.</p>
-            <a href="https://www.epicgames.com/fortnite" target="_blank">Play Now</a>
         </div>
 
         <!-- Game 4 -->
-        <div class="game-card">
+        <div class="game-card" onclick="playGame('codmw2')">
             <img src="https://example.com/images/codmw2.jpg" alt="Call of Duty: Modern Warfare 2">
             <h3>Call of Duty: Modern Warfare 2</h3>
             <p>A first-person shooter that continues the legendary Modern Warfare series with high-stakes action.</p>
-            <a href="https://www.callofduty.com/modernwarfare2" target="_blank">Play Now</a>
         </div>
 
         <!-- Game 5 -->
-        <div class="game-card">
+        <div class="game-card" onclick="playGame('amongus')">
             <img src="https://example.com/images/amongus.jpg" alt="Among Us">
             <h3>Among Us</h3>
             <p>A multiplayer game where players work together to complete tasks, but one player is secretly sabotaging them.</p>
-            <a href="https://www.innersloth.com/gameAmongUs.php" target="_blank">Play Now</a>
         </div>
     </div>
+
+    <!-- Embed section for playing games -->
+    <div id="game-player" class="game-player">
+        <iframe id="game-frame" src="" style="display:none;"></iframe>
+    </div>
+
+    <script>
+        function playGame(game) {
+            let iframe = document.getElementById('game-frame');
+            let gameUrl = "";
+
+            // Game URLs for embedding
+            if (game === 'fifa23') {
+                gameUrl = "https://www.fifa.com/"; // Placeholder URL, replace with actual playable game iframe URL
+            } else if (game === 'eldenring') {
+                gameUrl = "https://www.bandainamcoent.eu/elden-ring"; // Placeholder URL, replace with actual playable game iframe URL
+            } else if (game === 'fortnite') {
+                gameUrl = "https://www.epicgames.com/fortnite"; // Placeholder URL, replace with actual playable game iframe URL
+            } else if (game === 'codmw2') {
+                gameUrl = "https://www.callofduty.com/modernwarfare2"; // Placeholder URL, replace with actual playable game iframe URL
+            } else if (game === 'amongus') {
+                gameUrl = "https://www.innersloth.com/gameAmongUs.php"; // Placeholder URL, replace with actual playable game iframe URL
+            }
+
+            iframe.src = gameUrl;  // Set the source of the iframe
+            iframe.style.display = "block";  // Show the iframe
+        }
+    </script>
 </body>
 </html>
