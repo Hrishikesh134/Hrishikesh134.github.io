@@ -1,114 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OvO Game</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 1em;
-        }
-        h1 {
-            margin: 0;
-        }
-        .game-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin-top: 20px;
-        }
-        .game-card {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin: 10px;
-            width: 300px;
-            text-align: center;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-        .game-card:hover {
-            transform: scale(1.05);
-        }
-        .game-card h3 {
-            font-size: 1.5em;
-            margin: 10px 0;
-        }
-        .game-card p {
-            font-size: 1.2em;
-            color: #555;
-        }
-        iframe {
-            width: 100%;
-            height: 500px;
-            border: none;
-            margin-top: 20px;
-        }
-        .fullscreen-btn {
-            margin-top: 10px;
-            padding: 10px 20px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1em;
-        }
-        .fullscreen-btn:hover {
-            background-color: #0056b3;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>OvO Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 1em;
+    }
+    h1 {
+      margin: 0;
+    }
+    .game-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 20px;
+    }
+    .game-card {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin: 10px;
+      width: 300px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .game-card:hover {
+      transform: scale(1.05);
+    }
+    .game-card h3 {
+      font-size: 1.5em;
+      margin: 10px 0;
+    }
+    .game-card p {
+      font-size: 1.2em;
+      color: #555;
+    }
+    iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+      margin-top: 20px;
+    }
+    .fullscreen-btn {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+    .fullscreen-btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>OvO Game</h1>
-        <p>Click below to play the OvO game. You can also enter full screen for a better experience.</p>
-    </header>
+  <header>
+    <h1>OvO Game</h1>
+    <p>Click below to start the game. You can go full screen for a better experience!</p>
+  </header>
 
-    <div class="game-container">
-        <div class="game-card" onclick="playOvO()">
-            <h3>Play OvO</h3>
-            <p>Click here to start playing the OvO game!</p>
-        </div>
-
-        <!-- Embed section for the OvO game -->
-        <iframe id="game-frame" src="https://example.com/ovo-game" style="display:none;"></iframe>
-
-        <button id="fullscreen-btn" class="fullscreen-btn" onclick="toggleFullscreen()" style="display:none;">Go Fullscreen</button>
+  <div class="game-container">
+    <div class="game-card" onclick="playOvO()">
+      <h3>Play OvO</h3>
+      <p>Click to start playing!</p>
     </div>
 
-    <script>
-        // Play OvO Game
-        function playOvO() {
-            let iframe = document.getElementById('game-frame');
-            iframe.style.display = 'block'; // Show the iframe
-            let fullscreenBtn = document.getElementById('fullscreen-btn');
-            fullscreenBtn.style.display = 'inline-block'; // Show the fullscreen button
-        }
+    <!-- Real OvO game -->
+    <iframe
+      id="game-frame"
+      src="https://ovo.surge.sh"
+      style="display: none;"
+      allowfullscreen
+    ></iframe>
 
-        // Toggle fullscreen mode
-        function toggleFullscreen() {
-            let iframe = document.getElementById('game-frame');
-            if (iframe.requestFullscreen) {
-                iframe.requestFullscreen();
-            } else if (iframe.mozRequestFullScreen) { // Firefox
-                iframe.mozRequestFullScreen();
-            } else if (iframe.webkitRequestFullscreen) { // Chrome and Safari
-                iframe.webkitRequestFullscreen();
-            } else if (iframe.msRequestFullscreen) { // IE/Edge
-                iframe.msRequestFullscreen();
-            }
-        }
-    </script>
+    <button
+      id="fullscreen-btn"
+      class="fullscreen-btn"
+      onclick="toggleFullscreen()"
+      style="display: none;"
+    >
+      Go Fullscreen
+    </button>
+  </div>
+
+  <script>
+    function playOvO() {
+      const iframe = document.getElementById("game-frame");
+      const button = document.getElementById("fullscreen-btn");
+      iframe.style.display = "block";
+      button.style.display = "inline-block";
+    }
+
+    function toggleFullscreen() {
+      const iframe = document.getElementById("game-frame");
+      if (iframe.requestFullscreen) {
+        iframe.requestFullscreen();
+      } else if (iframe.mozRequestFullScreen) {
+        iframe.mozRequestFullScreen();
+      } else if (iframe.webkitRequestFullscreen) {
+        iframe.webkitRequestFullscreen();
+      } else if (iframe.msRequestFullscreen) {
+        iframe.msRequestFullscreen();
+      }
+    }
+  </script>
 </body>
 </html>
